@@ -10,4 +10,9 @@ package modelo;
  */
 public class Convenio {
     private Propietario propietario;
+
+    public Convenio(Propietario propietario) {
+        this.propietario = propietario;
+    }
+    
 }
