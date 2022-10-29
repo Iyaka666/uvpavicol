@@ -10,4 +10,9 @@ package modelo;
  */
 public class Contrasenia {
     private String llave;
+
+    public Contrasenia(String llave) {
+        this.llave = llave;
+    }
+    
 }

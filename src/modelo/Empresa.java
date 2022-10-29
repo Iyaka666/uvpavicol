@@ -16,4 +16,9 @@ public class Empresa {
     private List<Granja> granjas;
     private List<Galpon> galpones;
     private List<Lote> lotes;
+
+    public Empresa(String nombre) {
+        this.nombre = nombre;
+    }
+    
 }
