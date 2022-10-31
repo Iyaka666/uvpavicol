@@ -1,7 +1,9 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
+import util.exceptions.NegativeInvalidException;
 
 /**
  *
@@ -15,13 +17,17 @@ public class Lote {
     private short numeroMuertes;
     private Double numeroPromedio;
     private LocalDate fechaIngreso;
-    private List<Alimento> alimentos;
-    private List<Sacrificio> sacrificios;
+    private List<Alimento> alimentos = new LinkedList<>();
+    private List<Sacrificio> sacrificios = new LinkedList<>();
 
-    public Lote(short cantidadAves, short numeroMuertes, Double numeroPromedio, LocalDate fechaIngreso) {
+    public Lote(short cantidadAves, LocalDate fechaIngreso) throws Exception{
+        if(!(cantidadAves >= 0)){
+            throw new NegativeInvalidException("La cantidad de aves no puede ser negativa");
+        }
+        
         this.cantidadAves = cantidadAves;
-        this.numeroMuertes = numeroMuertes;
-        this.numeroPromedio = numeroPromedio;
+        this.numeroMuertes = 0;
+        this.numeroPromedio = 0.0;
         this.fechaIngreso = fechaIngreso;
     }
     
