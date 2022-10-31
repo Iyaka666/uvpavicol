@@ -3,6 +3,9 @@ package modelo;
 /**
  *
  * @author Marlon E. Zambrano Z.
+ * @author Juan 
+ * @author Santiago G.
+ * 
  */
 public class Alimento {
     private String tipo;

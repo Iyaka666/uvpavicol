@@ -6,6 +6,9 @@ import java.time.LocalTime;
 /**
  *
  * @author Marlon E. Zambrano Z.
+ * @author Juan 
+ * @author Santiago G.
+ * 
  */
 public class Sacrificio {
     private short cantidadAves;

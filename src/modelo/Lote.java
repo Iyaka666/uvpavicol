@@ -6,6 +6,9 @@ import java.util.List;
 /**
  *
  * @author Marlon E. Zambrano Z.
+ * @author Juan 
+ * @author Santiago G.
+ * 
  */
 public class Lote {
     private short cantidadAves;

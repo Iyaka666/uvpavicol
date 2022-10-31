@@ -5,6 +5,9 @@ import java.util.List;
 /**
  *
  * @author Marlon E. Zambrano Z.
+ * @author Juan 
+ * @author Santiago G.
+ * 
  */
 public class Granja {
     private String departamento;

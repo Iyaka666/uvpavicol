@@ -3,6 +3,9 @@ package modelo;
 /**
  *
  * @author Marlon E. Zambrano Z.
+ * @author Juan 
+ * @author Santiago G.
+ * 
  */
 public class Propietario extends Persona{
     private long telefono;
