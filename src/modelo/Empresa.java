@@ -1,6 +1,8 @@
 package modelo;
 
+import java.util.LinkedList;
 import java.util.List;
+import util.exceptions.StringVoidException;
 
 /**
  *
@@ -11,12 +13,15 @@ import java.util.List;
  */
 public class Empresa {
     private String nombre;
-    private List<Usuario> usuarios;
-    private List<Granja> granjas;
-    private List<Galpon> galpones;
-    private List<Lote> lotes;
+    private List<Usuario> usuarios = new LinkedList<>();
+    private List<Granja> granjas = new LinkedList<>();
+    private List<Galpon> galpones = new LinkedList<>();
+    private List<Lote> lotes = new LinkedList<>();
 
-    public Empresa(String nombre) {
+    public Empresa(String nombre) throws Exception{
+        if("".equals(nombre.trim())){
+            throw new StringVoidException("El nombre no puede estar vacio");
+        }
         this.nombre = nombre;
     }
     
