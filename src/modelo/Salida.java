@@ -12,4 +12,12 @@ public class Salida {
     private LocalDate fechaSalida;
     private LocalTime tiempoSalida;
     private EstadoLote estadoLote; 
+
+    public Salida(LocalDate fechaSalida, LocalTime tiempoSalida, EstadoLote estadoLote) {
+        this.fechaSalida = fechaSalida;
+        this.tiempoSalida = tiempoSalida;
+        this.estadoLote = estadoLote;
+    }
+    
+    
 }

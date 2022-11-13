@@ -7,4 +7,9 @@ package modelo;
  */
 public class Municipio {
     private Departamento departamento;
+
+    public Municipio(Departamento departamento) {
+        this.departamento = departamento;
+    }
+    
 }

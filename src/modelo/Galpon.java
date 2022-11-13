@@ -6,5 +6,5 @@ package modelo;
  * @author Juan E. Rodriguez R.
  */
 public class Galpon {
-    
+    public Galpon(){}
 }

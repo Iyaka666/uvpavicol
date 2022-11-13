@@ -13,4 +13,12 @@ public class Granja {
     private Municipio municipio;
     private Propietario propietario;
     private List<Galpon> galpones;
+
+    public Granja(TipoGranja tipoGranja, EstadoConvenio estadoConvenio, Municipio municipio, Propietario propietario) {
+        this.tipoGranja = tipoGranja;
+        this.estadoConvenio = estadoConvenio;
+        this.municipio = municipio;
+        this.propietario = propietario;
+    }
+    
 }

@@ -7,5 +7,8 @@ package modelo;
  * @author Juan E. Rodriguez R.
  */
 public class Propietario {
+
+    public Propietario() {
+    }
     
 }

@@ -9,4 +9,10 @@ import java.time.LocalDate;
  */
 public class RegistroDiario {
     private LocalDate fechaRegistroDiario;
+
+    public RegistroDiario(LocalDate fechaRegistroDiario) {
+        this.fechaRegistroDiario = fechaRegistroDiario;
+    }
+    
+    
 }

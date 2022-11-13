@@ -11,5 +11,8 @@ public class Empresa {
     List<Usuario> usuarios;
     List<Granja> granjas;
     List<Lote> lotes;
+
+    public Empresa() {
+    }
     
 }
