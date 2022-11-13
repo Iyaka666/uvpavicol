@@ -1,11 +1,12 @@
 package modelo;
 
+import java.time.LocalDate;
+
 /**
- *
  * @author Marlon E. Zambrano Z.
  * @author Santiago Gallardo S.
  * @author Juan E. Rodriguez R.
  */
-public class Propietario {
-    
+public class RegistroDiario {
+    private LocalDate fechaRegistroDiario;
 }
