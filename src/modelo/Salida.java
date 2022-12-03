@@ -12,6 +12,8 @@ public class Salida {
     private LocalDate fechaSalida;
     private LocalTime tiempoSalida;
     private EstadoLote estadoLote; 
+    //otros atributos
+    private short avesASacrificio;
 
     public Salida(LocalDate fechaSalida, LocalTime tiempoSalida, EstadoLote estadoLote) {
         this.fechaSalida = fechaSalida;
