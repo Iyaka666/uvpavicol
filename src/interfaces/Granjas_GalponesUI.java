@@ -113,8 +113,6 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
 
         tqtAvesAdultasAAlojar.setText("Aves adultas ha alojar :");
 
-        txfIdentificador.setText("jTextField1");
-
         txfAvesAdultasAAlojar.setText("jTextField2");
 
         javax.swing.GroupLayout pnlGalponLayout = new javax.swing.GroupLayout(pnlGalpon);
