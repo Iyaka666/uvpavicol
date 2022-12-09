@@ -20,5 +20,27 @@ public class Granja {
         this.municipio = municipio;
         this.propietario = propietario;
     }
+
+    public TipoGranja getTipoGranja() {
+        return tipoGranja;
+    }
+
+    public EstadoConvenio getEstadoConvenio() {
+        return estadoConvenio;
+    }
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public Propietario getPropietario() {
+        return propietario;
+    }
+
+    public List<Galpon> getGalpones() {
+        return galpones;
+    }
+    
+    
     
 }

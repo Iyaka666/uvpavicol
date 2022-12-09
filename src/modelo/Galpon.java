@@ -6,5 +6,22 @@ package modelo;
  * @author Juan E. Rodriguez R.
  */
 public class Galpon {
-    public Galpon(){}
+
+    private String identificador;
+    private short cantidadAvesAlojadas;
+
+    public Galpon(String id, short avesAlojadas) {
+        this.identificador = id;
+        this.cantidadAvesAlojadas = avesAlojadas;
+    }
+
+    public String getIdentificador() {
+        return identificador;
+    }
+
+    public short getCantidadAvesAlojadas() {
+        return cantidadAvesAlojadas;
+    }
+    
+    
 }
