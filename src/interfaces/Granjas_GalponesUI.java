@@ -1,12 +1,26 @@
 package interfaces;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ComboBoxModel;
+import javax.swing.event.ListDataListener;
+import javax.swing.table.AbstractTableModel;
+import modelo.Departamento;
+import modelo.Empresa;
+import modelo.Municipio;
+import modelo.Granja;
+import modelo.Galpon;
+
 /**
  *
  * @author Marlon E. Zambrano Z.
  */
 public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
 
-    public Granjas_GalponesUI() {
+    private Empresa empresa;
+
+    public Granjas_GalponesUI(Empresa empresa) {
+        this.empresa = empresa;
         initComponents();
     }
 
@@ -70,20 +84,25 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
         pnlGranjaLayout.setHorizontalGroup(
             pnlGranjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGranjaLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
                 .addGroup(pnlGranjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlGranjaLayout.createSequentialGroup()
-                        .addGroup(pnlGranjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tqtDepartamento)
-                            .addComponent(tqtMunicipio))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlGranjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbxDepartamento, 0, 245, Short.MAX_VALUE)
-                            .addComponent(cbxMunicipio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(pnlGranjaLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addComponent(rbtnGranjaPropia)
                         .addGap(33, 33, 33)
-                        .addComponent(rbtnGranjaConvenio)))
+                        .addComponent(rbtnGranjaConvenio))
+                    .addGroup(pnlGranjaLayout.createSequentialGroup()
+                        .addGroup(pnlGranjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlGranjaLayout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(tqtMunicipio)
+                                .addGap(34, 34, 34))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlGranjaLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(tqtDepartamento)
+                                .addGap(18, 18, 18)))
+                        .addGroup(pnlGranjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbxDepartamento, 0, 245, Short.MAX_VALUE)
+                            .addComponent(cbxMunicipio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         pnlGranjaLayout.setVerticalGroup(
@@ -157,6 +176,7 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbGranjas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tbGranjas);
 
         pnlFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 390, 230));
@@ -218,7 +238,6 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
      * @param args the command line arguments
      */
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarGalpon;
     private javax.swing.JButton btnCancelarTodo;
@@ -227,8 +246,8 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnEliminarGranja;
     private javax.swing.JButton btnGuardar;
     private javax.swing.ButtonGroup btngTipoGranja;
-    private javax.swing.JComboBox<String> cbxDepartamento;
-    private javax.swing.JComboBox<String> cbxMunicipio;
+    private javax.swing.JComboBox<Departamento> cbxDepartamento;
+    private javax.swing.JComboBox<Municipio> cbxMunicipio;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlFondo;
@@ -247,4 +266,118 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txfAvesAdultasAAlojar;
     private javax.swing.JTextField txfIdentificador;
     // End of variables declaration//GEN-END:variables
+
+    //private class modeloMunicipio implements ComboBoxModel<Municipio> {}
+    private class modeloMostrarGranjas extends AbstractTableModel {
+
+        private String[] encabezadosColumna = {"Departamento", "Municipio", "Estado"};
+
+        @Override
+        public int getRowCount() {
+            return empresa.getGranjas().size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return encabezadosColumna.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Granja g = empresa.getGranjas().get(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    g.getMunicipio().getDepartamento();
+                case 1:
+                    g.getMunicipio();
+                case 2:
+                    g.getEstadoConvenio();
+            }
+            return "";
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            return encabezadosColumna[column];
+        }
+
+        @Override
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return false;
+        }
+
+    }
+
+    private class MostrarGalpones implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Granja gSeleccionada = empresa.getGranjas().get(tbGranjas.getSelectedRow());
+            tbGalpones.setModel(new AbstractTableModel() {
+                private String[] encabezadosColumn = {"Identificador", "Aves adultas alojadas"};
+
+                @Override
+                public int getRowCount() {
+                    return gSeleccionada.getGalpones().size();
+                }
+
+                @Override
+                public int getColumnCount() {
+                    return encabezadosColumn.length;
+                }
+
+                @Override
+                public Object getValueAt(int rowIndex, int columnIndex) {
+                    Galpon galpon = gSeleccionada.getGalpones().get(rowIndex);
+                    switch (columnIndex) {
+                        case 0:
+                            galpon.getIdentificador();
+                        case 1:
+                            galpon.getCantidadAvesAlojadas();
+                    }
+                    return "";
+                }
+
+                @Override
+                public String getColumnName(int column) {
+                    return encabezadosColumn[column];
+                }
+
+                @Override
+                public boolean isCellEditable(int rowIndex, int columnIndex) {
+                    return false;
+                }
+            });
+        }
+
+    }
+
+    private class manejadorConvenio implements ActionListener {
+        
+    }
+
+    private class manejadorCrearGranja implements ActionListener {
+
+    }
+
+    private class manejadorEliminarGranja implements ActionListener {
+
+    }
+
+    private class manejadorAgregarGalpon implements ActionListener {
+
+    }
+
+    private class manejadorEliminarGalpon implements ActionListener {
+
+    }
+
+    private class manejadorGuardar implements ActionListener {
+
+    }
+
+    private class manejadorCancelarTodo implements ActionListener {
+
+    }
+
 }
