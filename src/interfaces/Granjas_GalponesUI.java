@@ -1,8 +1,10 @@
 package interfaces;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ComboBoxModel;
+import javax.swing.JFrame;
 import javax.swing.event.ListDataListener;
 import javax.swing.table.AbstractTableModel;
 import modelo.Departamento;
@@ -54,6 +56,9 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
         btnGuardar = new javax.swing.JButton();
         btnCancelarTodo = new javax.swing.JButton();
         tqtCerrar = new javax.swing.JLabel();
+
+        btngTipoGranja.add(rbtnGranjaPropia);
+        btngTipoGranja.add(rbtnGranjaConvenio);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -167,13 +172,10 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
 
         tbGranjas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         tbGranjas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -268,6 +270,7 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     //private class modeloMunicipio implements ComboBoxModel<Municipio> {}
+    
     private class modeloMostrarGranjas extends AbstractTableModel {
 
         private String[] encabezadosColumna = {"Departamento", "Municipio", "Estado"};
@@ -353,6 +356,12 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
     }
 
     private class manejadorConvenio implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            
+            
+        }
         
     }
 
