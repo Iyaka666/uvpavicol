@@ -1,17 +1,23 @@
 package interfaces;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.ComboBoxModel;
-import javax.swing.JFrame;
-import javax.swing.event.ListDataListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.AbstractTableModel;
+import excepciones.AtributosIncorrectosException;
+import excepciones.NegativoNoPermitidoException;
+import excepciones.ObjetoYaExisteException;
+import excepciones.TextoVacioException;
 import modelo.Departamento;
 import modelo.Empresa;
+import modelo.EstadoConvenio;
 import modelo.Municipio;
 import modelo.Granja;
 import modelo.Galpon;
+import modelo.TipoGranja;
+import modelo.Propietario;
 
 /**
  *
@@ -20,6 +26,11 @@ import modelo.Galpon;
 public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
 
     private Empresa empresa;
+
+    //Atributos necesarios para modificar informacion con base a varios eventos 
+    private TipoGranja tipoGranja;
+    private PropietarioUI propietarioUI = null;
+    //-------------------------------------------------------------------------
 
     public Granjas_GalponesUI(Empresa empresa) {
         this.empresa = empresa;
@@ -53,8 +64,6 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
         btnAgregarGalpon = new javax.swing.JButton();
         btnEliminarGranja = new javax.swing.JButton();
         btnEliminarGalpon = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
-        btnCancelarTodo = new javax.swing.JButton();
         tqtCerrar = new javax.swing.JLabel();
 
         btngTipoGranja.add(rbtnGranjaPropia);
@@ -137,8 +146,6 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
 
         tqtAvesAdultasAAlojar.setText("Aves adultas ha alojar :");
 
-        txfAvesAdultasAAlojar.setText("jTextField2");
-
         javax.swing.GroupLayout pnlGalponLayout = new javax.swing.GroupLayout(pnlGalpon);
         pnlGalpon.setLayout(pnlGalponLayout);
         pnlGalponLayout.setHorizontalGroup(
@@ -210,12 +217,6 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
         btnEliminarGalpon.setText("Eliminar");
         pnlFondo.add(btnEliminarGalpon, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 270, -1, -1));
 
-        btnGuardar.setText("Guardar");
-        pnlFondo.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 560, 390, -1));
-
-        btnCancelarTodo.setText("Cancelar Todo");
-        pnlFondo.add(btnCancelarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 560, 360, -1));
-
         tqtCerrar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tqtCerrar.setText("X");
         pnlFondo.add(tqtCerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 0, 30, 30));
@@ -242,14 +243,12 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarGalpon;
-    private javax.swing.JButton btnCancelarTodo;
     private javax.swing.JButton btnCrearGranja;
     private javax.swing.JButton btnEliminarGalpon;
     private javax.swing.JButton btnEliminarGranja;
-    private javax.swing.JButton btnGuardar;
     private javax.swing.ButtonGroup btngTipoGranja;
-    private javax.swing.JComboBox<Departamento> cbxDepartamento;
-    private javax.swing.JComboBox<Municipio> cbxMunicipio;
+    private javax.swing.JComboBox<String> cbxDepartamento;
+    private javax.swing.JComboBox<String> cbxMunicipio;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnlFondo;
@@ -270,7 +269,6 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     //private class modeloMunicipio implements ComboBoxModel<Municipio> {}
-    
     private class modeloMostrarGranjas extends AbstractTableModel {
 
         private String[] encabezadosColumna = {"Departamento", "Municipio", "Estado"};
@@ -315,78 +313,165 @@ public class Granjas_GalponesUI extends javax.swing.JInternalFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Granja gSeleccionada = empresa.getGranjas().get(tbGranjas.getSelectedRow());
-            tbGalpones.setModel(new AbstractTableModel() {
-                private String[] encabezadosColumn = {"Identificador", "Aves adultas alojadas"};
+            try {
+                Granja gSeleccionada = empresa.getGranjas().get(tbGranjas.getSelectedRow());
+                tbGalpones.setModel(new AbstractTableModel() {
+                    private String[] encabezadosColumn = {"Identificador", "Aves adultas alojadas"};
 
-                @Override
-                public int getRowCount() {
-                    return gSeleccionada.getGalpones().size();
-                }
-
-                @Override
-                public int getColumnCount() {
-                    return encabezadosColumn.length;
-                }
-
-                @Override
-                public Object getValueAt(int rowIndex, int columnIndex) {
-                    Galpon galpon = gSeleccionada.getGalpones().get(rowIndex);
-                    switch (columnIndex) {
-                        case 0:
-                            galpon.getIdentificador();
-                        case 1:
-                            galpon.getCantidadAvesAlojadas();
+                    @Override
+                    public int getRowCount() {
+                        return gSeleccionada.getGalpones().size();
                     }
-                    return "";
-                }
 
-                @Override
-                public String getColumnName(int column) {
-                    return encabezadosColumn[column];
-                }
+                    @Override
+                    public int getColumnCount() {
+                        return encabezadosColumn.length;
+                    }
 
-                @Override
-                public boolean isCellEditable(int rowIndex, int columnIndex) {
-                    return false;
-                }
-            });
+                    @Override
+                    public Object getValueAt(int rowIndex, int columnIndex) {
+                        Galpon galpon = gSeleccionada.getGalpones().get(rowIndex);
+                        switch (columnIndex) {
+                            case 0:
+                                galpon.getIdentificador();
+                            case 1:
+                                galpon.getCantidadAvesAlojadas();
+                        }
+                        return "";
+                    }
+
+                    @Override
+                    public String getColumnName(int column) {
+                        return encabezadosColumn[column];
+                    }
+
+                    @Override
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return false;
+                    }
+                });
+            } catch (Exception ex) {
+                Logger.getLogger(Granjas_GalponesUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
     }
 
     private class manejadorConvenio implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            
-            
+            try {
+                if (propietarioUI == null) {
+                    propietarioUI = new PropietarioUI();
+                    pnlFondo.add(propietarioUI);
+                }
+                if (rbtnGranjaConvenio.isSelected()) {
+                    tipoGranja = TipoGranja.CONVENIO;
+                    propietarioUI.setVisible(true);
+                }
+                if (rbtnGranjaPropia.isSelected()) {
+                    tipoGranja = TipoGranja.PROPIA;
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Granjas_GalponesUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        
+
     }
 
     private class manejadorCrearGranja implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String nombreDepartamento = (String) cbxDepartamento.getSelectedItem();
+                Municipio municipio = new Municipio((String) cbxMunicipio.getSelectedItem(),
+                        new Departamento(nombreDepartamento));
+                Propietario propietario = null;
+                EstadoConvenio estadoConvenio = null;
+                if (tipoGranja == TipoGranja.CONVENIO
+                        && (propietarioUI.getWidth() == 0 && propietarioUI.getHeight() == 0)) {
+                    propietario = propietarioUI.obtenerPropietario();
+                    estadoConvenio = EstadoConvenio.VIGENTE;
+                }
+                Granja granja = new Granja(tipoGranja, estadoConvenio, municipio, propietario);
+                empresa.addGranja(granja);
+                tbGranjas.updateUI();
+            } catch (AtributosIncorrectosException | ObjetoYaExisteException ex) {
+                JOptionPane.showMessageDialog(Granjas_GalponesUI.this, ex.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Granjas_GalponesUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     }
 
     private class manejadorEliminarGranja implements ActionListener {
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                int indiceGranja = tbGranjas.getSelectedRow();
+                Granja granja = empresa.buscaGranjaPorIndice(indiceGranja);
+                int opcion = JOptionPane.showConfirmDialog(Granjas_GalponesUI.this,
+                        "¿Esta seguro de eliminar la granja?", "Advertencia",
+                        JOptionPane.YES_NO_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    empresa.removeGranja(granja);
+                    tbGranjas.updateUI();
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(Granjas_GalponesUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     private class manejadorAgregarGalpon implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                String id = txfIdentificador.getText();
+                short cantidad = Short.parseShort(txfAvesAdultasAAlojar.getText());
+                Galpon galpon = new Galpon(id, cantidad);
+                int indiceGranja = tbGranjas.getSelectedRow();
+                Granja granja = empresa.buscaGranjaPorIndice(indiceGranja);
+                granja.getGalpones().add(galpon);
+                tbGalpones.updateUI();
+            } catch (TextoVacioException | NegativoNoPermitidoException ex) {
+                JOptionPane.showMessageDialog(Granjas_GalponesUI.this, ex.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(Granjas_GalponesUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
     }
 
     private class manejadorEliminarGalpon implements ActionListener {
 
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                int indiceGalpon = tbGalpones.getSelectedRow();
+                int indiceGranja = tbGranjas.getSelectedRow();
+                Granja granja = empresa.buscaGranjaPorIndice(indiceGranja);
+
+                int opcion = JOptionPane.showConfirmDialog(Granjas_GalponesUI.this,
+                        "¿Esta seguro que desea eliminar el galpon?",
+                        "Advertencia", JOptionPane.YES_NO_CANCEL_OPTION);
+                if (opcion == JOptionPane.YES_OPTION) {
+                    granja.getGalpones().remove(indiceGalpon);
+                    tbGalpones.updateUI();
+                }
+
+            } catch (Exception ex) {
+                Logger.getLogger(Granjas_GalponesUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
-    private class manejadorGuardar implements ActionListener {
-
-    }
-
-    private class manejadorCancelarTodo implements ActionListener {
-
-    }
+   
 
 }
