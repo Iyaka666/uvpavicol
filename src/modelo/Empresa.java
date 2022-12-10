@@ -1,5 +1,6 @@
 package modelo;
 
+import excepciones.ObjetoYaExisteException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +23,10 @@ public class Empresa {
         usuarios.add(u);
     }
 
-    public void addGranja(Granja g) {
+    public void addGranja(Granja g) throws Exception{
+        if(granjas.contains(g)){
+            throw new ObjetoYaExisteException("La granja ya existe");
+        }
         granjas.add(g);
     }
 
@@ -52,6 +56,10 @@ public class Empresa {
 
     public List<Lote> getLotes() {
         return this.lotes;
+    }
+    
+    public Granja buscaGranjaPorIndice(int indice){
+        return granjas.get(indice);
     }
 
 }
