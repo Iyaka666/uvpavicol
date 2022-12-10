@@ -4,17 +4,53 @@
  */
 package interfaces;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import excepciones.NegativoNoPermitidoException;
+import modelo.Propietario;
+import excepciones.TextoVacioException;
+
 /**
  *
  * @author Marlon E. Zambrano Z.
  */
 public class PropietarioUI extends javax.swing.JPanel {
 
+    private Propietario propietario;
+
     /**
      * Creates new form Propietario
      */
     public PropietarioUI() {
         initComponents();
+        btnGuardar.addActionListener((ActionEvent e) -> {
+            try {
+                long id = Long.parseLong(txfIdentificacion.getText());
+                String nombre = txfNombre.getText();
+                long telefono = Long.parseLong(txfTelefono.getText());
+                String correo = (String) ftxCorreo.getValue();
+                propietario = new Propietario(id, nombre, telefono, correo);
+                JOptionPane.showMessageDialog(PropietarioUI.this, "Informacion "
+                        + "guardada con exito");
+                
+            } catch (NegativoNoPermitidoException | TextoVacioException ex) {
+                JOptionPane.showMessageDialog(PropietarioUI.this, ex.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(PropietarioUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnCerrar.addActionListener((ActionEvent e ) -> {
+            if(propietario == null){
+                JOptionPane.showMessageDialog(PropietarioUI.this, 
+                        "no se ha agregado informacion del propietario\n"
+                                + "\t\t¿Esta seguro que desea continuar?",
+                        "Advertencia",JOptionPane.YES_NO_CANCEL_OPTION);
+            }
+            PropietarioUI.this.setSize(0, 0);            
+        });
     }
 
     /**
@@ -26,36 +62,36 @@ public class PropietarioUI extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jFormattedTextField2 = new javax.swing.JFormattedTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tqtNombre = new javax.swing.JLabel();
+        tqtIcono = new javax.swing.JLabel();
+        tqtIdentificacion = new javax.swing.JLabel();
+        tqtTitulo = new javax.swing.JLabel();
+        txfIdentificacion = new javax.swing.JTextField();
+        txfNombre = new javax.swing.JTextField();
+        tqtTelefono = new javax.swing.JLabel();
+        tqtCorreo = new javax.swing.JLabel();
+        ftxCorreo = new javax.swing.JFormattedTextField();
+        btnGuardar = new javax.swing.JButton();
+        btnCerrar = new javax.swing.JButton();
+        txfTelefono = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setText("Nombre :");
+        tqtNombre.setText("Nombre :");
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/propietario.png"))); // NOI18N
+        tqtIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/propietario.png"))); // NOI18N
 
-        jLabel1.setText("Identificacion :");
+        tqtIdentificacion.setText("Identificacion :");
 
-        jLabel6.setText("Informacion del Propietario");
+        tqtTitulo.setText("Informacion del Propietario");
 
-        jLabel4.setText("Telefono :");
+        tqtTelefono.setText("Telefono :");
 
-        jLabel3.setText("Correo :");
+        tqtCorreo.setText("Correo :");
 
-        jButton1.setText("Guardar");
+        btnGuardar.setText("Guardar");
 
-        jButton2.setText("Cancelar");
+        btnCerrar.setText("Cerrar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -66,23 +102,23 @@ public class PropietarioUI extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(tqtIcono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tqtIdentificacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tqtNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tqtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tqtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1)
-                            .addComponent(jTextField2)
-                            .addComponent(jFormattedTextField1)
-                            .addComponent(jFormattedTextField2)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)))
+                            .addComponent(txfIdentificacion)
+                            .addComponent(txfNombre)
+                            .addComponent(ftxCorreo)
+                            .addComponent(tqtTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 228, Short.MAX_VALUE)
+                            .addComponent(txfTelefono)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(104, 104, 104)
-                        .addComponent(jButton1)
+                        .addComponent(btnGuardar)
                         .addGap(81, 81, 81)
-                        .addComponent(jButton2)))
+                        .addComponent(btnCerrar)))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -91,48 +127,53 @@ public class PropietarioUI extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
+                        .addComponent(tqtIcono, javax.swing.GroupLayout.DEFAULT_SIZE, 84, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addComponent(jLabel6)
+                        .addComponent(tqtTitulo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tqtIdentificacion)
+                    .addComponent(txfIdentificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tqtNombre)
+                    .addComponent(txfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tqtTelefono)
+                    .addComponent(txfTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tqtCorreo)
+                    .addComponent(ftxCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCerrar))
                 .addGap(28, 28, 28))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
-    private javax.swing.JFormattedTextField jFormattedTextField2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JFormattedTextField ftxCorreo;
+    private javax.swing.JLabel tqtCorreo;
+    private javax.swing.JLabel tqtIcono;
+    private javax.swing.JLabel tqtIdentificacion;
+    private javax.swing.JLabel tqtNombre;
+    private javax.swing.JLabel tqtTelefono;
+    private javax.swing.JLabel tqtTitulo;
+    private javax.swing.JTextField txfIdentificacion;
+    private javax.swing.JTextField txfNombre;
+    private javax.swing.JTextField txfTelefono;
     // End of variables declaration//GEN-END:variables
+    
+    public Propietario obtenerPropietario() throws Exception{
+        return this.propietario;
+    }
+
 }
