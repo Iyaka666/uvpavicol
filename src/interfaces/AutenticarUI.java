@@ -3,13 +3,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaces;
-
+import modelo.Usuario;
 /**
  *
  * @author Marlon E. Zambrano Z.
  */
 public class AutenticarUI extends javax.swing.JFrame {
-
+    private Usuario usuario;
     /**
      * Creates new form AutenticarUI
      */
@@ -121,4 +121,8 @@ public class AutenticarUI extends javax.swing.JFrame {
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+    public Usuario getUsuario(){
+        return this.usuario;
+    }
+
 }
