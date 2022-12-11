@@ -17,6 +17,26 @@ public class Usuario {
         this.contrasenia = contrasenia;
         this.granja = granja;
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public Granja getGranja() {
+        return granja;
+    }
     
+    
+    public boolean esRoot(){
+        return this.nombre.toLowerCase().equals("root");
+    }
     
 }
